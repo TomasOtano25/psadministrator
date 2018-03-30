@@ -9,8 +9,8 @@ export const createCourse = course => {
     })
     .catch(error => {
       console.log(`Error adding document: ${error}`);
+      return alert("Connection error");
     });*/
   return { type: "CREATE_COURSE", course };
-
   //return { type: "CREATE_COURSE", course: course };
 };

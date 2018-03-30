@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
-import { Firebase } from "../../firebase/firebase";
 import { createCourse } from "../../actions/courseActions";
+import PropTypes from "prop-types";
+import { Firebase } from "../../firebase/firebase";
 
-class CoursesPages extends Component {
+class CoursesPage extends Component {
   /*constructor(props) {
     super(props);
 
@@ -36,11 +36,16 @@ class CoursesPages extends Component {
     alert(`Saving ${this.state.course.title}`);
   }
 
+  courseRow(course, index) {
+    return <div key={index}>{course.title}</div>;
+  }
+
   render() {
     const { course } = this.state;
     return (
       <div className="container">
         <h1>Courses</h1>
+        {this.props.courses.map(this.courseRow)}
         <h2>Add Courses</h2>
         <form>
           <input
@@ -60,8 +65,14 @@ class CoursesPages extends Component {
   }
 }
 
+CoursesPage.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  courses: PropTypes.array.isRequired
+};
+
 //state: es el estado de la tienda de redux
 const mapStateToProps = (state, ownProps) => {
+  debugger;
   return {
     courses: state.courses
   };
@@ -71,4 +82,4 @@ const mapStateToProps = (state, ownProps) => {
 export default connectedStateAndProps(CoursesPages);*/
 
 // mapDispatchToProps: es opcional
-export default connect(mapStateToProps)(CoursesPages);
+export default connect(mapStateToProps)(CoursesPage);
