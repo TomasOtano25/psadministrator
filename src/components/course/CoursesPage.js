@@ -1,6 +1,10 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
-export default class CoursesPages extends Component {
+import { Firebase } from "../../firebase/firebase";
+import { createCourse } from "../../actions/courseActions";
+
+class CoursesPages extends Component {
   /*constructor(props) {
     super(props);
 
@@ -25,6 +29,10 @@ export default class CoursesPages extends Component {
 
   onClickSave(event) {
     event.preventDefault();
+    //const fb = new Firebase();
+    //fb.addDocument("courses", this.state.course);
+    //fb.getAllOneCollection("courses");
+    this.props.dispatch(createCourse(this.state.course));
     alert(`Saving ${this.state.course.title}`);
   }
 
@@ -51,3 +59,16 @@ export default class CoursesPages extends Component {
     );
   }
 }
+
+//state: es el estado de la tienda de redux
+const mapStateToProps = (state, ownProps) => {
+  return {
+    courses: state.courses
+  };
+};
+
+/*const connectedStateAndProps = connect(mapStateToProps, mapDispatchToProps);
+export default connectedStateAndProps(CoursesPages);*/
+
+// mapDispatchToProps: es opcional
+export default connect(mapStateToProps)(CoursesPages);
