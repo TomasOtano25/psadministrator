@@ -1,10 +1,25 @@
 import React, { Component } from "react";
-// import logo from "./logo.svg";
+import PropTypes from "proptypes";
 import "./App.css";
 
+import Header from "./components/common/Header";
+import { BrowserRouter } from "react-router-dom";
+import Routes from "./routes";
+
 class App extends Component {
+  /*static propTypes = {
+    children: PropTypes.object.isRequired
+  };*/
+
   render() {
-    return <div>...</div>;
+    return (
+      <BrowserRouter>
+        <div>
+          <Header />
+          <Routes />
+        </div>
+      </BrowserRouter>
+    );
   }
 }
 
