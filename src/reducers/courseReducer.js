@@ -12,4 +12,13 @@ const courseReducer = (state = [], action) => {
   }
 };
 
-export { courseReducer };
+const loadReducer = (state = [], action) => {
+  switch (action.type) {
+    case types.LOAD_COURSES_SUCESS:
+      return action.courses;
+    default:
+      return state;
+  }
+};
+
+export { courseReducer, loadReducer };

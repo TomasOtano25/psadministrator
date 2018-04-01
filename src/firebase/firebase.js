@@ -27,15 +27,7 @@ class Firebase {
   }
 
   getAllOneCollection(collection) {
-    Firebase.fs
-      .collection(collection)
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          console.log(doc.id);
-          console.log(doc.data());
-        });
-      });
+    return Firebase.fs.collection(collection).get();
   }
 }
 

@@ -13,6 +13,10 @@ class CoursesPage extends Component {
     return <div key={index}>{course.title}</div>;
   }
 
+  /*componentDidMount() {
+    this.props.actions.loadCourses();
+  }*/
+
   render() {
     return (
       <div className="container">
@@ -35,6 +39,7 @@ CoursesPage.propTypes = {
 //state: es el estado de la tienda de redux
 const mapStateToProps = (state, ownProps) => {
   return {
+    // courses: state.courses,
     courses: state.courses
   };
 };
