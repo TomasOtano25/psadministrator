@@ -1,11 +1,12 @@
 import { createStore, applyMiddleware } from "redux";
 import rootReducer from "../reducers";
 import reduxImmutableStateInvariant from "redux-immutable-state-invariant";
+import thunkMiddleware from "redux-thunk";
 
 const middleware =
   process.env.NODE_ENV !== "production"
-    ? [reduxImmutableStateInvariant()]
-    : [null];
+    ? [reduxImmutableStateInvariant(), thunkMiddleware]
+    : [thunkMiddleware];
 
 const configureStore = initialState => {
   return createStore(
@@ -13,7 +14,7 @@ const configureStore = initialState => {
     initialState,
     window.__REDUX_DEVTOOLS_EXTENSION__ &&
       window.__REDUX_DEVTOOLS_EXTENSION__(),
-    applyMiddleware(/*...middleware*/ reduxImmutableStateInvariant())
+    applyMiddleware(...middleware /*reduxImmutableStateInvariant()*/)
   );
 };
 
