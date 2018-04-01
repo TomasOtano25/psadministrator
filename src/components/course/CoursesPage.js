@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { createCourse } from "../../actions/courseActions";
+//import { createCourse } from "../../actions/courseActions";
+import * as courseActions from "../../actions/courseActions";
+import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
 import { Firebase } from "../../firebase/firebase";
 
@@ -32,7 +34,9 @@ class CoursesPage extends Component {
     //const fb = new Firebase();
     //fb.addDocument("courses", this.state.course);
     //fb.getAllOneCollection("courses");
-    this.props.dispatch(createCourse(this.state.course));
+    //this.props.dispatch(createCourse(this.state.course));
+    //this.props.createCourse(this.state.course);
+    this.props.actions.createCourse(this.state.course);
     alert(`Saving ${this.state.course.title}`);
   }
 
@@ -66,15 +70,28 @@ class CoursesPage extends Component {
 }
 
 CoursesPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  courses: PropTypes.array.isRequired
+  //dispatch: PropTypes.func.isRequired,
+  courses: PropTypes.array.isRequired,
+  //createCourse: PropTypes.func.isRequired,
+  actions: PropTypes.object.isRequired
 };
 
 //state: es el estado de la tienda de redux
 const mapStateToProps = (state, ownProps) => {
-  debugger;
   return {
     courses: state.courses
+  };
+};
+
+/*const mapDispatchToProps = dispatch => {
+  return {
+    createCourse: course => dispatch(createCourse(course))
+  };
+};*/
+const mapDispatchToProps = dispatch => {
+  return {
+    actions: bindActionCreators(courseActions, dispatch)
+    //createCourse: bindActionCreators(courseActions.createCourse, dispatch)
   };
 };
 
@@ -82,4 +99,5 @@ const mapStateToProps = (state, ownProps) => {
 export default connectedStateAndProps(CoursesPages);*/
 
 // mapDispatchToProps: es opcional
-export default connect(mapStateToProps)(CoursesPage);
+//export default connect(mapStateToProps)(CoursesPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
