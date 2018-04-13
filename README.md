@@ -1,5 +1,4 @@
 # PSADMINISTRATOR
----
 
 Es un sistema de consumo de API, escalable.
 
