@@ -29,6 +29,13 @@ class Firebase {
   getAllOneCollection(collection) {
     return Firebase.fs.collection(collection).get();
   }
+
+  updateDocument(collection, data) {
+    return Firebase.fs
+      .collection(collection)
+      .doc(data.id)
+      .set(data);
+  }
 }
 
-export { Firebase };
+export default Firebase;

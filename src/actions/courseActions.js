@@ -1,45 +1,52 @@
-import { Firebase } from "../firebase/firebase";
-// import courseApi from "../api/mockCourseApi";
+import Firebase from "../firebase/firebase";
 import types from "./actionTypes";
-// creador de accion
-export const createCourse = course => {
-  new Firebase()
-    .addDocument("courses", course)
-    .then(docRef => {
-      console.log(`Document written with ID: ${docRef.id}`);
-    })
-    .catch(error => {
-      console.log(`Error adding document: ${error}`);
-      return alert("Connection error");
-    });
-  return { type: types.CREATE_COURSE, course };
-  //return { type: "CREATE_COURSE", course: course };
+
+const loadCoursesSuccess = courses => {
+  return { type: types.LOAD_COURSES_SUCCESS, courses };
 };
 
-// loadCoursesFailure o Error
-const loadCoursesSucces = courses => {
-  return { type: types.LOAD_COURSES_SUCESS, courses };
+const saveCourseSuccess = course => {
+  return { type: types.SAVE_COURSE_SUCCESS, course };
 };
 
-export const loadCourses = () => {
-  let respuestas = [];
-  return function(dispatch) {
-    /*return courseApi.getAllCourses().then(courses => {
-      dispatch(loadCoursesSucces(courses))
-    })*/
-    return new Firebase()
-      .getAllOneCollection("courses")
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          respuestas.push(
-            Object.assign({}, { id: doc.id, title: doc.data().title })
+const updateCourseSuccess = course => {
+  return { type: types.UPDATE_COURSE_SUCCESS, course };
+};
+
+export const saveCourse = course => async (dispatch, getState) => {
+  if (course.id) {
+    new Firebase()
+      .updateDocument("courses", course)
+      .then(dispatch(updateCourseSuccess(course)));
+  } else {
+    new Firebase()
+      .addDocument("courses", course)
+      .then(docRef => {
+        docRef
+          .get()
+          .then(resp =>
+            dispatch(
+              saveCourseSuccess(Object.assign({}, { id: resp.id }, resp.data()))
+            )
           );
-        });
-        dispatch(loadCoursesSucces(respuestas));
-        // console.log(respuestas);
       })
       .catch(error => {
         throw error;
       });
-  };
+  }
+};
+
+export const loadCourses = () => async dispatch => {
+  let respuestas = [];
+  new Firebase()
+    .getAllOneCollection("courses")
+    .then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        respuestas.push(Object.assign({}, { id: doc.id }, doc.data()));
+      });
+      dispatch(loadCoursesSuccess(respuestas));
+    })
+    .catch(error => {
+      throw error;
+    });
 };

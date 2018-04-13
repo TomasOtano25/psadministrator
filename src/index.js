@@ -6,6 +6,7 @@ import ReactDOM from "react-dom";
 import configureStore from "./store/configureStore";
 import { Provider } from "react-redux";
 import { loadCourses } from "./actions/courseActions";
+import { loadAuthors } from "./actions/authorAction";
 
 import "./styles/styles.css";
 import App from "./App";
@@ -17,12 +18,13 @@ import "jquery/dist/jquery.min.js";
 import "popper.js/dist/popper.min.js";
 import "bootstrap/dist/js/bootstrap.min.js";
 
-import { Firebase } from "./firebase/firebase";
+import Firebase from "./firebase/firebase";
 
 new Firebase().firebaseInit();
 
 const store = configureStore();
 store.dispatch(loadCourses());
+store.dispatch(loadAuthors());
 
 ReactDOM.render(
   <Provider store={store}>
