@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as coursesActions from "../../actions/courseActions";
 import CourseForm from "./CourseForm";
-import { Redirect } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 
 class ManageCoursePage extends Component {
   constructor(props) {
@@ -64,7 +64,10 @@ ManageCoursePage.propTypes = {
 
 ManageCoursePage.contextType = { router: PropTypes.object };
 
+// own props internos
 const mapStateToProps = (state, ownState) => {
+  const courseId = ownState.match.params;
+
   let course = {
     id: "",
     watchHref: "",
@@ -91,4 +94,6 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(coursesActions, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageCoursePage);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(ManageCoursePage)
+);

@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 //import "./index.css";
 // Store
-import configureStore from "./store/configureStore";
+import { configureStore } from "./store/configureStore";
 import { Provider } from "react-redux";
 import { loadCourses } from "./actions/courseActions";
 import { loadAuthors } from "./actions/authorAction";
@@ -23,6 +23,7 @@ import Firebase from "./firebase/firebase";
 new Firebase().firebaseInit();
 
 const store = configureStore();
+
 store.dispatch(loadCourses());
 store.dispatch(loadAuthors());
 

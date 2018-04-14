@@ -19,6 +19,7 @@ export const saveCourse = course => async (dispatch, getState) => {
       .updateDocument("courses", course)
       .then(dispatch(updateCourseSuccess(course)));
   } else {
+    delete course.id;
     new Firebase()
       .addDocument("courses", course)
       .then(docRef => {
@@ -37,14 +38,14 @@ export const saveCourse = course => async (dispatch, getState) => {
 };
 
 export const loadCourses = () => async dispatch => {
-  let respuestas = [];
+  let response = [];
   new Firebase()
     .getAllOneCollection("courses")
     .then(querySnapshot => {
       querySnapshot.forEach(doc => {
-        respuestas.push(Object.assign({}, { id: doc.id }, doc.data()));
+        response.push(Object.assign({}, { id: doc.id }, doc.data()));
       });
-      dispatch(loadCoursesSuccess(respuestas));
+      dispatch(loadCoursesSuccess(response));
     })
     .catch(error => {
       throw error;

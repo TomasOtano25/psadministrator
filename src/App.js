@@ -4,6 +4,8 @@ import "./App.css";
 
 import Header from "./components/common/Header";
 import { BrowserRouter } from "react-router-dom";
+import { ConnectedRouter } from "react-router-redux";
+import { history } from "./store/configureStore";
 import Routes from "./routes";
 
 class App extends Component {
@@ -13,12 +15,12 @@ class App extends Component {
 
   render() {
     return (
-      <BrowserRouter>
+      <ConnectedRouter history={history}>
         <div>
           <Header />
           <Routes />
         </div>
-      </BrowserRouter>
+      </ConnectedRouter>
     );
   }
 }
