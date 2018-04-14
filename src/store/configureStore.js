@@ -2,21 +2,13 @@ import { createStore, applyMiddleware, compose } from "redux";
 import rootReducer from "../reducers";
 import reduxImmutableStateInvariant from "redux-immutable-state-invariant";
 import thunkMiddleware from "redux-thunk";
-import { routerMiddleware } from "react-router-redux";
-import createHistory from "history/createBrowserHistory";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const history = createHistory();
-
 const middleware =
   process.env.NODE_ENV !== "production"
-    ? [
-        reduxImmutableStateInvariant(),
-        thunkMiddleware,
-        routerMiddleware(history)
-      ]
-    : [thunkMiddleware, routerMiddleware(history)];
+    ? [reduxImmutableStateInvariant(), thunkMiddleware]
+    : [thunkMiddleware];
 
 const configureStore = initialState => {
   return createStore(
@@ -26,4 +18,4 @@ const configureStore = initialState => {
   );
 };
 
-export { configureStore, history };
+export { configureStore };

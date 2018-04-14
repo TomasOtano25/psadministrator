@@ -66,8 +66,8 @@ ManageCoursePage.contextType = { router: PropTypes.object };
 
 // own props internos
 const mapStateToProps = (state, ownState) => {
-  const courseId = ownState.match.params;
-
+  const courseId = ownState.match.params.id;
+  debugger;
   let course = {
     id: "",
     watchHref: "",
@@ -94,6 +94,4 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(coursesActions, dispatch)
 });
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(ManageCoursePage)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageCoursePage);
