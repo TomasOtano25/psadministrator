@@ -1,11 +1,13 @@
 import types from "./actionTypes";
 import Firebase from "../firebase/firebase";
+import { beginAjaxCall } from "./ajaxStatusAction";
 
 const loadAuthorsSuccess = authors => {
   return { type: types.LOAD_AUTHORS_SUCCESS, authors };
 };
 
 export const loadAuthors = () => async dispatch => {
+  dispatch(beginAjaxCall());
   let response = [];
   new Firebase()
     .getAllOneCollection("authors")

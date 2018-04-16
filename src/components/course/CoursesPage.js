@@ -7,8 +7,6 @@ import CoursesList from "./courseList";
 import { Link } from "react-router-dom";
 
 class CoursesPage extends Component {
-  redirectAddCoursePage() {}
-
   render() {
     const { courses } = this.props;
     return (

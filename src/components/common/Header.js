@@ -1,7 +1,9 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import LoadingDots from "../common/LoadingDots";
+import PropTypes from "prop-types";
 
-const Header = () => (
+const Header = ({ loading }) => (
   <div>
     <header className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
@@ -44,7 +46,12 @@ const Header = () => (
         </nav>
       </div>
     </header>
+    {loading && <LoadingDots interval={100} dots={20} />}
   </div>
 );
+
+Headers.propTypes = {
+  loading: PropTypes.bool.isRequired
+};
 
 export default Header;

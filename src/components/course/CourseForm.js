@@ -6,13 +6,13 @@ import PropTypes from "prop-types";
 const CourseForm = ({
   course,
   allAuthor,
-  loading,
+  saving,
   onSave,
   onChange,
   errors
 }) => {
   return (
-    <div className="container">
+    <form className="container">
       <h1>Manage Course</h1>
       <TextInput
         name="title"
@@ -46,12 +46,12 @@ const CourseForm = ({
       />
       <input
         type="submit"
-        disabled={loading}
-        value={loading ? "Saving..." : "Save"}
+        disabled={saving}
+        value={saving ? "Saving..." : "Save"}
         className="btn btn-primary"
-        onClick={onSave}
+        onClick={event => onSave(event)}
       />
-    </div>
+    </form>
   );
 };
 
@@ -60,7 +60,7 @@ CourseForm.propTypes = {
   course: PropTypes.object.isRequired,
   onSave: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  loading: PropTypes.bool,
+  saving: PropTypes.bool,
   errors: PropTypes.object
 };
 

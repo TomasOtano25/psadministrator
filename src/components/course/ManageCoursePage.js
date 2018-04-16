@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as coursesActions from "../../actions/courseActions";
 import CourseForm from "./CourseForm";
-import { Redirect, withRouter } from "react-router-dom";
+import { toast } from "react-toastify";
+import { css } from "glamor";
 
 class ManageCoursePage extends Component {
   constructor(props) {
@@ -17,8 +18,16 @@ class ManageCoursePage extends Component {
   state = {
     course: Object.assign({}, this.props.course),
     errors: {},
-    toCourses: false
+    saving: false
   };
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.course.id !== nextProps.course.id) {
+      this.setState({
+        course: Object.assign({}, nextProps.course)
+      });
+    }
+  }
 
   updateCourseState(event) {
     const field = event.target.name;
@@ -29,21 +38,31 @@ class ManageCoursePage extends Component {
     });
   }
 
-  saveCourse() {
-    this.props.actions.saveCourse(this.state.course);
-    this.setState({
-      toCourses: true
+  saveCourse(event) {
+    event.preventDefault();
+    this.setState({ saving: true });
+    this.props.actions
+      .saveCourse(this.state.course)
+      .then(() => this.redirect())
+      .catch(error => {
+        toast.error(error, {
+          position: toast.POSITION.BOTTOM_RIGHT
+        });
+        this.setState({ saving: false });
+      });
+  }
+
+  redirect() {
+    this.setState({ saving: false });
+    toast.success("Course saved", {
+      position: toast.POSITION.BOTTOM_RIGHT
     });
+    this.props.history.push("/courses");
   }
 
   render() {
-    const { course, errors, toCourses } = this.state;
+    const { course, errors, saving } = this.state;
     const { authors } = this.props;
-
-    if (toCourses === true) {
-      return <Redirect to="/courses" />;
-    }
-
     return (
       <CourseForm
         course={course}
@@ -51,6 +70,7 @@ class ManageCoursePage extends Component {
         onSave={this.saveCourse}
         errors={errors}
         allAuthor={authors}
+        saving={saving}
       />
     );
   }
@@ -64,10 +84,16 @@ ManageCoursePage.propTypes = {
 
 ManageCoursePage.contextType = { router: PropTypes.object };
 
+const getCourseById = (courses, id) => {
+  const course = courses.filter(course => course.id === id);
+  if (course) return course[0];
+  return null;
+};
+
 // own props internos
 const mapStateToProps = (state, ownState) => {
   const courseId = ownState.match.params.id;
-  debugger;
+
   let course = {
     id: "",
     watchHref: "",
@@ -76,6 +102,10 @@ const mapStateToProps = (state, ownState) => {
     category: "",
     length: ""
   };
+
+  if (courseId && state.courses.length > 0) {
+    course = getCourseById(state.courses, courseId);
+  }
 
   const authorsFormattedForDropdown = state.authors.map(author => {
     return {
