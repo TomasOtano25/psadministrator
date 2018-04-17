@@ -10,7 +10,7 @@ export const saveCourseSuccess = course => {
   return { type: types.SAVE_COURSE_SUCCESS, course };
 };
 
-const updateCourseSuccess = course => {
+export const updateCourseSuccess = course => {
   return { type: types.UPDATE_COURSE_SUCCESS, course };
 };
 
