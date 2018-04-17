@@ -2,10 +2,10 @@ import React from "react";
 import ShallowRenderer from "react-test-renderer/shallow";
 import CourseForm from "./CourseForm";
 
-function setup() {
+function setup(saving) {
   let props = {
     course: {},
-    saving: false,
+    saving: saving,
     errors: {},
     onSave: () => {},
     onChange: () => {}
@@ -29,9 +29,15 @@ describe("CourseForm via React Test Utils", () => {
     expect(h1.type).toBe("h1");
   });
 
-  it("save button is labeled 'save' when not saving", () => {
-    const { output } = setup();
+  it("save button is labeled 'Save' when not saving", () => {
+    const { output } = setup(false);
     const submitButton = output.props.children[5];
     expect(submitButton.props.value).toBe("Save");
+  });
+
+  it("save button is labeled 'Saving...' when saving", () => {
+    const { output } = setup(true);
+    const submitButton = output.props.children[5];
+    expect(submitButton.props.value).toBe("Saving...");
   });
 });

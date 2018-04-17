@@ -6,7 +6,7 @@ const loadCoursesSuccess = courses => {
   return { type: types.LOAD_COURSES_SUCCESS, courses };
 };
 
-const saveCourseSuccess = course => {
+export const saveCourseSuccess = course => {
   return { type: types.SAVE_COURSE_SUCCESS, course };
 };
 

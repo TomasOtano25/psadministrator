@@ -2,16 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const TextInput = ({ name, label, onChange, placeholder, value, error }) => {
-  let wrapperClass = "form-group";
+  let wrapperClass = "form-control";
   if (error && error.length > 0) {
-    wrapperClass += " has-error";
+    wrapperClass += " is-invalid";
   }
 
   return (
-    <div className={wrapperClass}>
+    <div className="form-group">
       <label htmlFor={name}>{label}</label>
       <input
-        className="form-control"
+        className={wrapperClass}
         type="text"
         placeholder={placeholder}
         name={name}
