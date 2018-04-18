@@ -6,7 +6,7 @@ function actionTypeEndsInSuccess(type) {
 }
 
 const ajaxStatusReducer = (
-  state = initialState.numAjaxCallsInProgress,
+  state = initialState.ajaxCallsInProgress,
   action
 ) => {
   if (action.type === types.BEGIN_AJAX_CALL) {
