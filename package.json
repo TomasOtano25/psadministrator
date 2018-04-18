@@ -2,6 +2,7 @@
   "name": "psadministrator",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://tomasotano25.github.io/psadministrator",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.0.0",
